@@ -1,3 +1,4 @@
+const { Op } = require('sequelize')
 const Task = require('../models/task.model')
 
 async function findAll(filters = {}) {
@@ -5,6 +6,12 @@ async function findAll(filters = {}) {
 
   if (filters.done !== undefined) {
     where.done = filters.done
+  }
+
+  if (filters.title !== undefined) {
+    where.title = {
+      [Op.iLike]: `%${filters.title}%`,
+    }
   }
 
   return Task.findAll({

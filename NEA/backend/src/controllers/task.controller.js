@@ -105,10 +105,28 @@ async function deleteTask(req, res) {
   }
 }
 
+async function getTasksSummary(req, res) {
+  try {
+    const tasks = await taskService.getTasks({})
+    const lastTask = tasks[tasks.length - 1]
+
+    return res.json({
+      ...taskSummary(tasks),
+      lastTask: taskRef(lastTask),
+    })
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({
+      message: 'No se ha podido obtener el resumen',
+    })
+  }
+}
+
 module.exports = {
   getTasks,
   getTaskById,
   createTask,
   updateTask,
   deleteTask,
+  getTasksSummary,
 }

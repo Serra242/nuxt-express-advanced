@@ -59,6 +59,11 @@ const listTasksRequestSchema = z.object({
       .enum(['true', 'false'])
       .transform((value) => value === 'true')
       .optional(),
+    title: z
+      .string()
+      .trim()
+      .min(1)
+      .optional(),
   }),
 })
 
@@ -69,4 +74,6 @@ module.exports = {
   taskIdRequestSchema,
   createTaskRequestSchema,
   updateTaskBodySchema,
+  updateTaskRequestSchema,
+  listTasksRequestSchema,
 }

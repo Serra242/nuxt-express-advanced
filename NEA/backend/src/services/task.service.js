@@ -5,6 +5,7 @@ const taskRepository = require(
 async function getTasks(dto) {
   return taskRepository.findAll({
     done: dto.done,
+    title: dto.title,
   })
 }
 

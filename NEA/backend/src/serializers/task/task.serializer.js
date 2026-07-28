@@ -37,7 +37,20 @@ function taskRef(task) {
   }
 }
 
+function taskSummary(tasks) {
+  const total = tasks.length
+  const completed = tasks.filter((t) => t.done).length
+  const pending = total - completed
+
+  return {
+    total,
+    completed,
+    pending,
+  }
+}
+
 module.exports = {
   taskPublic,
   taskRef,
+  taskSummary,
 }

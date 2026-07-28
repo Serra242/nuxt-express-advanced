@@ -30,6 +30,8 @@ function taskIdDto(validated) {
 function listTasksDto(validated) {
   return Object.freeze({                //Object.freeze ayuda a expresar que el DTO no debería modificarse durante el recorrido.
     done: validated.query.done,
+    title: validated.query.title,
+
   })
 }
 
