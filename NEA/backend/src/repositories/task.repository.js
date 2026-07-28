@@ -3,13 +3,13 @@ const Task = require('../models/task.model')
 async function findAll(filters = {}) {
   const where = {}
 
-  if (typeof filters.done === 'boolean') {
+  if (filters.done !== undefined) {
     where.done = filters.done
   }
 
   return Task.findAll({
     where,
-    order: [['created_at', 'DESC']],
+    order: [['id', 'ASC']],
   })
 }
 

@@ -2,8 +2,10 @@ const taskRepository = require(
   '../repositories/task.repository'
 )
 
-async function getTasks(filters) {
-  return taskRepository.findAll(filters)
+async function getTasks(dto) {
+  return taskRepository.findAll({
+    done: dto.done,
+  })
 }
 
 async function getTaskById(id) {
