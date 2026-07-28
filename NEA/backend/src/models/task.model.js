@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize')
 const {
   sequelize,
-} = require('../database/sequelize')
+} = require('../../database/sequelize')
 
 const Task = sequelize.define(
   'Task',
