@@ -1,0 +1,7 @@
+Table tasks {
+  id integer [pk, increment]
+  title varchar(255) [not null]
+  done boolean [not null, default: false]
+  created_at timestamptz [not null]
+  updated_at timestamptz [not null]
+}
