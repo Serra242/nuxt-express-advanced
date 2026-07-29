@@ -1,5 +1,7 @@
 const cors = require('cors')
 const express = require('express')
+const authRouter = require('../routes/auth.routes')
+const usersRouter = require('../routes/users.routes')
 const tasksRouter = require('../routes/tasks.routes')
 const {
   registerSwagger,
@@ -28,6 +30,8 @@ app.get('/api/health', (req, res) => {
 })
 
 app.use('/api/tasks', tasksRouter)
+app.use('/api/auth', authRouter)
+app.use('/api/users', usersRouter)
 
 app.use((req, res) => {
   res.status(404).json({
