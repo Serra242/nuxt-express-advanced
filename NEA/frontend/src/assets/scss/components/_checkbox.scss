@@ -1,0 +1,8 @@
+@use '../settings/variables' as *;
+
+.c-checkbox-tpl {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  cursor: pointer;
+}

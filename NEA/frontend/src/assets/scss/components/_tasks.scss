@@ -10,6 +10,11 @@
   }
 }
 
+.pg-tasks-tpl__container {
+  width: min($max-width-page, 100%);
+  margin: 0 auto;
+}
+
 .c-task-form-tpl {
   display: grid;
   gap: $space-3;

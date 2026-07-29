@@ -11,6 +11,7 @@ interface Props {
   label: string
   type?: 'button' | 'submit' | 'reset'
   variant?: ButtonVariant
+  size?: 'md' | 'compact'
   disabled?: boolean
   loading?: boolean
   ariaLabel?: string
@@ -19,6 +20,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   type: 'button',
   variant: 'primary',
+  size: 'md',
   disabled: false,
   loading: false,
   ariaLabel: undefined,
@@ -39,9 +41,8 @@ const emit = defineEmits<{
     :class="[
       'c-button-tpl',
       `c-button-tpl--${props.variant}`,
-      {
-        'is-loading': props.loading,
-      },
+      `c-button-tpl--${props.size}`,
+      { 'is-loading': props.loading },
     ]"
     @click="emit('click', $event)"
   />
