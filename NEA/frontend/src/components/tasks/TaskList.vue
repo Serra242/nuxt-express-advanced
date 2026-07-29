@@ -4,10 +4,12 @@ import type { Task } from '~/types/task'
 interface Props {
   tasks: Task[]
   loading?: boolean
+  deletingIds?: Set<number>
 }
 
 const props = withDefaults(defineProps<Props>(), {
   loading: false,
+  deletingIds: () => new Set(),
 })
 
 const emit = defineEmits<{
@@ -36,6 +38,7 @@ const emit = defineEmits<{
       v-for="task in props.tasks"
       :key="task.id"
       :task="task"
+      :is-deleting="props.deletingIds.has(task.id)"
       @toggle="emit('toggle', $event)"
       @delete="emit('delete', $event)"
     />

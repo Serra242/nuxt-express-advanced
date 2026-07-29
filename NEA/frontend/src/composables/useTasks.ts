@@ -1,7 +1,6 @@
 import { ref } from 'vue'
 import type { Task } from '~/types/task'
-import type { TaskService } from '~/services/task.service'
-
+import { createTaskService, type TaskService } from '~/services/task.service'
 
 export function useTasks(
   providedService?: TaskService,
@@ -15,6 +14,7 @@ export function useTasks(
   const loading = ref(false)
   const saving = ref(false)
   const errorMessage = ref('')
+  const deletingIds = ref<Set<number>>(new Set())
 
   async function loadTasks() {
     loading.value = true
@@ -79,6 +79,7 @@ export function useTasks(
 
   async function deleteTask(id: number) {
     errorMessage.value = ''
+    deletingIds.value.add(id)
 
     try {
       await taskService.remove(id)
@@ -91,6 +92,8 @@ export function useTasks(
       errorMessage.value =
         'No se ha podido eliminar la tarea.'
       return false
+    } finally {
+      deletingIds.value.delete(id)
     }
   }
 
@@ -103,6 +106,7 @@ export function useTasks(
     loading,
     saving,
     errorMessage,
+    deletingIds,
     loadTasks,
     createTask,
     toggleTask,

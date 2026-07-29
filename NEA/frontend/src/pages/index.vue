@@ -2,36 +2,23 @@
 import type { Task } from '~/types/task'
 
 const notification = useNotification()
+const taskForm = ref<{
+  clear: () => void
+} | null>(null)
 
 const {
   tasks,
   loading,
   saving,
   errorMessage,
+  deletingIds,
   loadTasks,
   createTask,
   toggleTask,
   deleteTask,
-  clearError,
 } = useTasks()
 
-const taskForm = ref<{
-  clear: () => void
-} | null>(null)
-
-const filter = ref<'all' | 'pending' | 'done'>('all')
-
-const filteredTasks = computed(() => {
-  if (filter.value === 'pending') {
-    return tasks.value.filter((task) => !task.done)
-  }
-
-  if (filter.value === 'done') {
-    return tasks.value.filter((task) => task.done)
-  }
-
-  return tasks.value
-})
+const { activeFilter, filteredTasks } = useTaskFilters(tasks)
 
 async function handleCreateTask(title: string) {
   const created = await createTask(title)
@@ -39,32 +26,26 @@ async function handleCreateTask(title: string) {
   if (created) {
     taskForm.value?.clear()
     notification.success('Tarea creada')
-  } else {
-    notification.error('La operación ha fallado')
   }
 }
 
 async function handleToggleTask(task: Task) {
   const updated = await toggleTask(task)
 
-  if (!updated) {
-    notification.error('La operación ha fallado')
+  if (updated) {
+    notification.success('Tarea actualizada')
   }
 }
 
 async function handleDeleteTask(id: number) {
-  const success = await deleteTask(id)
+  const deleted = await deleteTask(id)
 
-  if (success) {
+  if (deleted) {
     notification.success('Tarea eliminada')
-  } else {
-    notification.error('La operación ha fallado')
   }
 }
 
-onMounted(() => {
-  loadTasks()
-})
+onMounted(loadTasks)
 </script>
 
 <template>
@@ -72,7 +53,7 @@ onMounted(() => {
     <div class="pg-tasks-tpl__container">
       <BaseCard
         title="Nuxt + Express + PostgreSQL"
-        subtitle="Las tareas ya se guardan de forma persistente."
+        subtitle="Frontend organizado por responsabilidades."
       >
         <TaskForm
           ref="taskForm"
@@ -86,13 +67,6 @@ onMounted(() => {
           role="alert"
         >
           {{ errorMessage }}
-
-          <BaseButton
-            label="Cerrar"
-            variant="ghost"
-            size="compact"
-            @click="clearError"
-          />
         </p>
 
         <div class="c-task-toolbar-tpl">
@@ -106,33 +80,15 @@ onMounted(() => {
           />
         </div>
 
-        <div class="c-task-toolbar-tpl">
-          <BaseButton
-            label="Todas"
-            :variant="filter === 'all' ? 'primary' : 'ghost'"
-            @click="filter = 'all'"
-          />
-
-          <BaseButton
-            label="Pendientes"
-            :variant="filter === 'pending' ? 'primary' : 'ghost'"
-            @click="filter = 'pending'"
-          />
-
-          <BaseButton
-            label="Completadas"
-            :variant="filter === 'done' ? 'primary' : 'ghost'"
-            @click="filter = 'done'"
-          />
-        </div>
+        <TaskFilters v-model="activeFilter" />
 
         <TaskList
-          :tasks="tasks"
+          :tasks="filteredTasks"
           :loading="loading"
+          :deleting-ids="deletingIds"
           @toggle="handleToggleTask"
           @delete="handleDeleteTask"
         />
-
       </BaseCard>
     </div>
   </main>

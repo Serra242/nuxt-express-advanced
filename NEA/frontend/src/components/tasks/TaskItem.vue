@@ -3,9 +3,12 @@ import type { Task } from '~/types/task'
 
 interface Props {
   task: Task
+  isDeleting?: boolean
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  isDeleting: false,
+})
 
 const emit = defineEmits<{
   toggle: [task: Task]
@@ -19,6 +22,7 @@ const emit = defineEmits<{
       <input
         type="checkbox"
         :checked="props.task.done"
+        :disabled="props.isDeleting"
         @change="emit('toggle', props.task)"
       >
 
@@ -33,8 +37,10 @@ const emit = defineEmits<{
     </label>
 
     <BaseButton
-      label="Eliminar"
+      :label="props.isDeleting ? 'Eliminando...' : 'Eliminar'"
       variant="danger"
+      :loading="props.isDeleting"
+      :disabled="props.isDeleting"
       @click="emit('delete', props.task.id)"
     />
   </li>
