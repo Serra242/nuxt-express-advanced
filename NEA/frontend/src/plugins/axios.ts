@@ -8,6 +8,21 @@ export default defineNuxtPlugin(() => {
     timeout: 5000,
   })
 
+  api.interceptors.request.use((request) => {
+    if (import.meta.client) {
+      const token = localStorage.getItem(
+        'tasks_access_token',
+      )
+
+      if (token) {
+        request.headers.Authorization =
+          `Bearer ${token}`
+      }
+    }
+
+    return request
+  })
+
   return {
     provide: {
       api,
