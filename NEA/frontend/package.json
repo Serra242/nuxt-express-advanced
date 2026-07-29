@@ -12,7 +12,11 @@
   "dependencies": {
     "axios": "^1.18.1",
     "nuxt": "^4.5.0",
+    "primevue": "^4.5.5",
     "vue": "^3.5.40",
     "vue-router": "^5.2.0"
+  },
+  "devDependencies": {
+    "sass": "^1.102.0"
   }
 }

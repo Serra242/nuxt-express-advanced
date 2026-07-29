@@ -1,0 +1,32 @@
+@use '../settings/variables' as *;
+
+@mixin control-shell-tpl(
+  $height: $control-height-md
+) {
+  width: 100%;
+  min-height: $height;
+  padding: 0 $space-3;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  background: $color-surface;
+  color: $color-text;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+
+  &:focus {
+    border-color: $color-primary-50;
+    box-shadow: $focus-ring;
+  }
+
+  &:disabled {
+    background: $color-grey-10;
+    cursor: not-allowed;
+  }
+}
+
+@mixin control-shell-hover-tpl {
+  &:not(:disabled):hover {
+    border-color: $color-grey-40;
+  }
+}

@@ -1,0 +1,21 @@
+@use '../settings/variables' as *;
+@use '../tools/controls' as controls;
+
+.c-input-text-tpl {
+  display: grid;
+  gap: $space-2;
+
+  &__control {
+    @include controls.control-shell-tpl;
+    @include controls.control-shell-hover-tpl;
+  }
+
+  &__error {
+    color: $color-danger-50;
+    font-size: $font-size-sm;
+  }
+
+  &.has-error &__control {
+    border-color: $color-danger-50;
+  }
+}

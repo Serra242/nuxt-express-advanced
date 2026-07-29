@@ -1,0 +1,18 @@
+@use '../settings/variables' as *;
+
+.c-toast-tpl {
+  display: grid;
+  gap: $space-3;
+  width: min(24rem, calc(100vw - 2rem));
+
+  &__message {
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    background: $color-surface;
+    box-shadow: $shadow-md;
+  }
+
+  &__content {
+    padding: $space-4;
+  }
+}

@@ -5,17 +5,19 @@ const taskPublicContract = z
     id: z.number().int().positive(),
     title: z.string().min(1).max(255),
     done: z.boolean(),
-    createdAt: z.union([
-      z.date(),
-      z.string().datetime(),
-    ]),
-    updatedAt: z.union([
-      z.date(),
-      z.string().datetime(),
-    ]),
+    createdAt: z.union([z.date(), z.string().datetime()]),
+    updatedAt: z.union([z.date(), z.string().datetime()]),
   })
   .strict()
-  .openapi('TaskPublic')
+  .openapi('TaskPublic', {
+    example: {
+      id: 1,
+      title: 'Entender qué es una API',
+      done: false,
+      createdAt: '2026-01-10T10:00:00.000Z',
+      updatedAt: '2026-01-10T10:00:00.000Z',
+    },
+  })
 
 const taskListContract = z
   .array(taskPublicContract)
@@ -59,6 +61,23 @@ const listTasksQueryContract = z
   })
   .openapi('ListTasksQuery')
 
+const taskRefContract = z
+  .object({
+    id: z.number().int().positive(),
+    title: z.string().min(1).max(255),
+  })
+  .strict()
+  .openapi('TaskRef')
+
+const taskSummaryContract = z
+  .object({
+    total: z.number().int().min(0),
+    completed: z.number().int().min(0),
+    pending: z.number().int().min(0),
+  })
+  .strict()
+  .openapi('TaskSummary')
+
 module.exports = {
   taskPublicContract,
   taskListContract,
@@ -66,4 +85,6 @@ module.exports = {
   createTaskBodyContract,
   updateTaskBodyContract,
   listTasksQueryContract,
+  taskRefContract,
+  taskSummaryContract,
 }

@@ -1,0 +1,6 @@
+@use '../settings/variables' as *;
+
+.o-card {
+  width: min(45rem, 100%);
+  margin-inline: auto;
+}

@@ -11,6 +11,7 @@ const {
   createTaskBodyContract,
   updateTaskBodyContract,
   listTasksQueryContract,
+  taskSummaryContract,
 } = require('../contracts')
 
 const registry = new OpenAPIRegistry()
@@ -22,6 +23,7 @@ registry.register('TaskIdParams', taskIdParamsContract)
 registry.register('CreateTaskBody', createTaskBodyContract)
 registry.register('UpdateTaskBody', updateTaskBodyContract)
 registry.register('ListTasksQuery', listTasksQueryContract)
+registry.register('TaskSummary', taskSummaryContract)
 
 registry.registerPath({
   method: 'get',

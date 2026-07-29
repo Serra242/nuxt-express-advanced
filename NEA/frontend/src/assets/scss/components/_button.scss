@@ -1,0 +1,65 @@
+@use '../settings/variables' as *;
+
+.c-button-tpl {
+  display: inline-flex;
+  min-height: $control-height-md;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  padding: 0 $space-4;
+  border: 1px solid transparent;
+  border-radius: $radius-sm;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    opacity 150ms ease;
+
+  &:focus-visible {
+    box-shadow: $focus-ring;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  &--primary {
+    background: $color-primary-50;
+    color: $color-surface;
+
+    &:not(:disabled):hover {
+      background: $color-primary-70;
+    }
+  }
+
+  &--secondary {
+    border-color: $color-border;
+    background: $color-surface;
+    color: $color-grey-70;
+
+    &:not(:disabled):hover {
+      background: $color-grey-10;
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: $color-primary-70;
+
+    &:not(:disabled):hover {
+      background: $color-primary-10;
+    }
+  }
+
+  &--danger {
+    background: $color-danger-50;
+    color: $color-surface;
+
+    &:not(:disabled):hover {
+      filter: brightness(0.92);
+    }
+  }
+}

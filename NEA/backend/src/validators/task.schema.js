@@ -67,7 +67,6 @@ const listTasksRequestSchema = z.object({
   }),
 })
 
-
 module.exports = {
   taskIdSchema,
   taskTitleSchema,

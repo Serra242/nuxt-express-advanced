@@ -8,6 +8,7 @@ const {
   createTaskBodyContract,
   updateTaskBodyContract,
   listTasksQueryContract,
+  taskSummaryContract,
 } = require('./task.contract')
 
 module.exports = {
@@ -18,4 +19,5 @@ module.exports = {
   createTaskBodyContract,
   updateTaskBodyContract,
   listTasksQueryContract,
+  taskSummaryContract,
 }

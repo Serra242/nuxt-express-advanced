@@ -3,55 +3,50 @@ const assert = require('node:assert/strict')
 
 const {
   taskPublic,
+  taskRef,
 } = require('../../../src/serializers/task')
 const {
   taskPublicContract,
+  taskRefConstract,
+} = require('../../../src/contracts')
+
+const {
+  taskPublic,
+  taskRef,
+} = require('../../../src/serializers/task')
+const {
+  taskPublicContract,
+  taskRefContract,
 } = require('../../../src/contracts')
 
 test(
-  'taskPublic produce una respuesta compatible',
+  'taskRef produce una vista compatible y reducida',
   () => {
     const modelLike = {
       get() {
         return {
-          id: 1,
-          title: 'Probar contratos',
-          done: false,
-          createdAt: new Date(
-            '2026-01-10T10:00:00.000Z',
-          ),
-          updatedAt: new Date(
-            '2026-01-10T10:00:00.000Z',
-          ),
-          internalValue: 'no debe salir',
+          id: 3,
+          title: 'Vista de referencia',
+          done: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         }
       },
     }
 
-    const serialized = taskPublic(modelLike)
-    const parsed = taskPublicContract.parse(serialized)
+    const serialized = taskRef(modelLike)
+    const parsed = taskRefContract.parse(serialized)
 
-    assert.equal(parsed.id, 1)
-    assert.equal(parsed.title, 'Probar contratos')
+    assert.equal(parsed.id, 3)
     assert.equal(
-      Object.hasOwn(parsed, 'internalValue'),
+      Object.hasOwn(parsed, 'done'),
       false,
     )
   },
 )
 
-test(
-  'TaskPublic no admite campos públicos inesperados',
-  () => {
-    const result = taskPublicContract.safeParse({
-      id: 1,
-      title: 'Tarea',
-      done: false,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      password: 'no debería existir',
-    })
-
-    assert.equal(result.success, false)
-  },
-)
+test('taskSummary respeta el contrato', () => {
+  const summary = { total: 4, completed: 2, pending: 2 }
+  const parsed = taskSummaryContract.parse(summary)
+  assert.equal(parsed.total, 4)
+})

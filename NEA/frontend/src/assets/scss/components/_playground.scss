@@ -1,0 +1,25 @@
+@use '../settings/variables' as *;
+
+.pg-playground-tpl {
+  width: min(70rem, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: $space-7 0;
+
+  &__grid {
+    display: grid;
+    grid-template-columns:
+      repeat(auto-fit, minmax(18rem, 1fr));
+    gap: $space-5;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-3;
+  }
+
+  &__stack {
+    display: grid;
+    gap: $space-4;
+  }
+}
