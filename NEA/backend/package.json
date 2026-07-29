@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "nodemon --watch src --ext js --exec node src/app/server.js",
     "start": "node src/app/server.js",
-    "test": "node --test"
+    "test": "node --test",
+    "migrate": "sequelize-cli db:migrate",
+    "migrate:undo": "sequelize-cli db:migrate:undo",
+    "seed:admin": "node scripts/seed-admin.js"
   },
   "keywords": [],
   "author": "",
@@ -14,9 +17,11 @@
   "type": "commonjs",
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^9.1.0",
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
     "pg": "^8.22.0",
     "sequelize": "^6.37.8",
     "swagger-ui-express": "^5.0.1",
@@ -24,6 +29,7 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.14",
+    "sequelize-cli": "^6.6.5",
     "supertest": "^7.2.2"
   }
 }
