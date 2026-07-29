@@ -1,10 +1,15 @@
 import { ref } from 'vue'
 import type { Task } from '~/types/task'
-import { createTaskService } from '~/services/task.service'
+import type { TaskService } from '~/services/task.service'
 
-export function useTasks() {
-  const { $api } = useNuxtApp()
-  const taskService = createTaskService($api)
+
+export function useTasks(
+  providedService?: TaskService,
+) {
+  const taskService = providedService ?? (() => {
+    const { $api } = useNuxtApp()
+    return createTaskService($api)
+  })()
 
   const tasks = ref<Task[]>([])
   const loading = ref(false)
@@ -89,6 +94,10 @@ export function useTasks() {
     }
   }
 
+  function clearError() {
+    errorMessage.value = ''
+  }
+
   return {
     tasks,
     loading,
@@ -98,5 +107,6 @@ export function useTasks() {
     createTask,
     toggleTask,
     deleteTask,
+    clearError,
   }
 }

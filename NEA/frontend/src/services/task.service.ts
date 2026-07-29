@@ -53,3 +53,7 @@ export function createTaskService(
     remove,
   }
 }
+
+export type TaskService = ReturnType<
+  typeof createTaskService
+>

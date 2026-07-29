@@ -12,6 +12,7 @@ const {
   createTask,
   toggleTask,
   deleteTask,
+  clearError,
 } = useTasks()
 
 const taskForm = ref<{
@@ -85,6 +86,13 @@ onMounted(() => {
           role="alert"
         >
           {{ errorMessage }}
+
+          <BaseButton
+            label="Cerrar"
+            variant="ghost"
+            size="compact"
+            @click="clearError"
+          />
         </p>
 
         <div class="c-task-toolbar-tpl">
@@ -124,7 +132,7 @@ onMounted(() => {
           @toggle="handleToggleTask"
           @delete="handleDeleteTask"
         />
-        
+
       </BaseCard>
     </div>
   </main>
