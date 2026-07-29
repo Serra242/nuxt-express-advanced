@@ -3,7 +3,7 @@ require('dotenv').config()
 const app = require('./app')
 const {
   connectDatabase,
-} = require('../../database/sequelize')
+} = require('../database/sequelize')
 
 const PORT = Number(process.env.PORT) || 3001
 
