@@ -80,8 +80,7 @@ onMounted(loadTasks)
           />
         </div>
 
-        <TaskFilters v-model="activeFilter" />
-
+        <TaskFilter v-model="activeFilter" />
         <TaskList
           :tasks="filteredTasks"
           :loading="loading"

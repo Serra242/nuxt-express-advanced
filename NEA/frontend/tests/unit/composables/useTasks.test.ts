@@ -29,3 +29,23 @@ test('loadTasks actualiza la lista', async () => {
     'Tarea simulada',
   )
 })
+
+test('deleteTask no modifica la lista si el servicio falla', async () => {
+  const service = createFakeService()
+  service.remove = vi.fn().mockRejectedValue(
+    new Error('fail'),
+  )
+
+  const { tasks, loadTasks, deleteTask, errorMessage } =
+    useTasks(service)
+
+  await loadTasks()
+
+  const result = await deleteTask(1)
+
+  expect(result).toBe(false)
+  expect(tasks.value).toHaveLength(1)
+  expect(errorMessage.value).toBe(
+    'No se ha podido eliminar la tarea.',
+  )
+})
